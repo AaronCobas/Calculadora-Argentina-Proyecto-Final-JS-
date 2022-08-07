@@ -26,32 +26,36 @@ const divICL = document.getElementById("divICL")
 formIVA.addEventListener("submit", (iva1) => {
     iva1.preventDefault()
 let numeroCalcular = parseFloat(ivaInput.value)
+let resultadoIVA = calculadoraIva(numeroCalcular)
 divIVA.innerHTML += `
 <div class="card" style="width: 18rem;">
 <div class="card-body">
-    <h5 class="card-title">${calculadoraIva(numeroCalcular)}</h5>
+    <h5 class="card-title">${resultadoIVA}</h5>
     <button class="btn btn-danger"><img src="https://img.icons8.com/pastel-glyph/20/FFFFFF/trash.png"></button>
 </div>
 </div>
 `
-let resultadoIVA = calculadoraIva(numeroCalcular)
 const calculosIVA = new Calculo("IVA", resultadoIVA)
 calculos.push(calculosIVA)
 localStorage.setItem("calculos", JSON.stringify(calculos))
 formIVA.reset() 
 })
+
+
+
+
 formICL.addEventListener("submit", (e1) => {
     e1.preventDefault()
 let numeroCalcularicl = parseFloat(iclInput.value)
+let resultadoICL = calculadoraICL(numeroCalcularicl)
 divICL.innerHTML += `
-<div class="card" style="width: 18rem;" id="${calculos.indexOf}">
+<div class="card" style="width: 18rem;" id="">
 <div class="card-body">
-    <h5 class="card-title">${calculadoraICL(numeroCalcularicl)}</h5>
+    <h5 class="card-title">${resultadoICL}</h5>
     <button class="btn btn-danger"><img src="https://img.icons8.com/pastel-glyph/20/FFFFFF/trash.png"></button>
 </div>
 </div>
 `
-let resultadoICL = calculadoraICL(numeroCalcularicl)
 const calculosICL = new Calculo("ICL", resultadoICL)
 calculos.push(calculosICL)
 localStorage.setItem("calculos", JSON.stringify(calculos))
