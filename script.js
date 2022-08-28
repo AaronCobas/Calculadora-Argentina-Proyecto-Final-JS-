@@ -12,7 +12,8 @@ const divIVA = document.getElementById("divIVA")
 const formICL = document.getElementById("formICL")
 const iclInput = document.getElementById("iclInput")
 const divICL = document.getElementById("divICL")
-const divDolar = document.getElementById("dolar")
+const buttonCalc = document.getElementById("mostrarCalculos")
+const divMuestraC = document.getElementById("divMuestraC")
 /* Muestra (o en caso de no haber, crea) un localStorage */
 if(localStorage.getItem("calculos")){
     calculos = JSON.parse(localStorage.getItem("calculos"))
@@ -28,25 +29,42 @@ function calculadoraICL(numero2){
 /*Calcula el IVA y lo muestra */
 formIVA.addEventListener("submit", (iva1) => {
     iva1.preventDefault()
-let numeroCalcular = parseFloat(ivaInput.value)
-let resultadoIVA = calculadoraIva(numeroCalcular)
-divIVA.innerHTML = ""
-divIVA.innerHTML += `
-<div class="card" style="width: 18rem;" id="">
-<div class="card-body">
-    <h5 class="card-title">${resultadoIVA}</h5>
-</div>
-</div>
-`
-const calculosIVA = new Calculo("IVA", resultadoIVA)
-calculos.push(calculosIVA)
-localStorage.setItem("calculos", JSON.stringify(calculos))
-formIVA.reset() 
+    if (ivaInput.value > 0) {
+        let numeroCalcular = parseFloat(ivaInput.value)
+        let resultadoIVA = calculadoraIva(numeroCalcular)
+        divIVA.innerHTML = ""
+        divIVA.innerHTML += `
+        <div class="card" style="width: 18rem;" id="">
+        <div class="card-body">
+            <h5 class="card-title">${resultadoIVA}</h5>
+        </div>
+        </div>
+        `
+        const calculosIVA = new Calculo("IVA", resultadoIVA)
+        calculos.push(calculosIVA)
+        localStorage.setItem("calculos", JSON.stringify(calculos))
+        formIVA.reset() 
+    } else {
+        Toastify({ // En caso de escribir un número que no es válido (0, menor que 0 o nada) sale una alerta
+            text: "Por favor, introduzca un número válido.",
+            duration: 3000,
+            newWindow: true,
+            close: true,
+            gravity: "bottom",
+            position: "right",
+            stopOnFocus: true,
+            style: {
+            background: "linear-gradient(0deg, rgba(128,50,69,1) 0%, rgba(236,9,65,1) 100%)",
+            },
+            onClick: function(){}
+        }).showToast();
+    }
 })
 /*Calcula el ICL y lo muestra */
 formICL.addEventListener("submit", (e1) => {
     e1.preventDefault()
-let numeroCalcularicl = parseFloat(iclInput.value)
+    if (iclInput.value > 0) {
+        let numeroCalcularicl = parseFloat(iclInput.value)
 let resultadoICL = calculadoraICL(numeroCalcularicl)
 divICL.innerHTML = ""
 divICL.innerHTML += `
@@ -60,36 +78,54 @@ const calculosICL = new Calculo("ICL", resultadoICL)
 calculos.push(calculosICL)
 localStorage.setItem("calculos", JSON.stringify(calculos))
 formICL.reset() 
+    } else {
+        Toastify({ // En caso de escribir un número que no es válido (0, menor que 0 o nada) sale una alerta
+            text: "Por favor, introduzca un número válido.",
+            duration: 3000,
+            newWindow: true,
+            close: true,
+            gravity: "bottom",
+            position: "right",
+            stopOnFocus: true,
+            style: {
+            background: "linear-gradient(0deg, rgba(128,50,69,1) 0%, rgba(236,9,65,1) 100%)",
+            },
+            onClick: function(){}
+        }).showToast();
+    }
 })
-/* Fetch y API */
-fetch("https://criptoya.com/api/dolar") //Consutlo información externa
-.then(response => response.json()) //Paso los datos json a objeto
-.then(({oficial, solidario, blue, mep, ccl}) => { // Una vez que tengo los objetos, los uso para crear html(en este caso, una tabla) que los muestre
-    console.log(oficial, solidario, blue, mep, ccl)
-    divDolar.innerHTML = `<table class="table table-striped-columns">
-    <tr>
-    <th>Tipo de dolar</th>
-    <th>Valor</th>
-    </tr>
-    <tr>
-        <td>Dolar Oficial</td>
-        <td>${oficial}</td>
-    </tr>
-        <tr>
-        <td>Dolar Solidario</td>
-        <td>${solidario}</td>
-    </tr>
-    <tr>
-    <td>Dolar Blue</td>
-    <td>${blue}</td>
-</tr>
-<tr>
-<td>Dolar Mep</td>
-<td>${mep}</td>
-</tr>
-<tr>
-<td>Dolar CCL</td>
-<td>${ccl}</td>
-</tr>
-</table> `
+//*Botón para mostrar todos los cálculos hechos hasta ahora*//
+buttonCalc.addEventListener("click", (e2) => {
+    if (calculos.length > 0) {
+        const calculosStorage = JSON.parse(localStorage.getItem("calculos"))
+        divMuestraC.innerHTML = ""
+        calculosStorage.forEach((calcArray, indice) => {
+            divMuestraC.innerHTML += `
+            <div class="card" style="width: 18rem;" id="calculo${indice}">
+            <div class="card-body">
+                <h5 class="card-title">
+                Tipo de operación:${JSON.stringify(calcArray.impuesto)}
+                Resultado: ${JSON.stringify(calcArray.resultado)}
+                </h5>
+                <button class="btn btn-danger">
+                    <img src="https://img.icons8.com/ios-glyphs/30/000000/trash--v1.png" alt="" srcset="">
+                </button>
+            </div>
+            </div>
+            `
+        })
+        calculosStorage.forEach((calculo, indice) =>{ //Elimina un cálculo a elección, tanto del html como del array y el localStorage
+            document.getElementById(`calculo${indice}`).children[0].children[1].addEventListener("click", () => {
+                document.getElementById(`calculo${indice}`).remove()
+                calculos.splice(indice,1)
+                localStorage.setItem("calculos", JSON.stringify(calculos))
+            })
+        })
+    } else {
+        Swal.fire( // Si no se realizó ningun cálculo al momento de clickear "Mostrar todos los cálculos", sale una alerta
+            'Error',
+            'No realizaste ningún cálculo.',
+            'error'
+        )
+    }
 })

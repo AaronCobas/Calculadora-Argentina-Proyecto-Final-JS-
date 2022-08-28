@@ -4,40 +4,37 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 <link rel="stylesheet" href="https://bootswatch.com/5/slate/bootstrap.min.css">
-    <title>Document</title>
+    <title>Calculadora Argentina</title>
 </head>
 <body>
-    <div class="contenedor">
-    <h2>Calculadora de IVA</h2>
-    <form id="formIVA">
-        <div class="mb-3">
-        <label for="numeroiva" class="form-label">Coloca el número a calcular</label>
-        <input type="number" class="form-control" name="numeroIVA" id="ivaInput" aria-describedby="NumeroPasarIva">
-        <button type="submit" class="btn btn-primary">Enviar</button>
-    </form>
+        <h1 class="d-flex justify-content-center">Calculadora Argentina</h1>
     </div>
-    <div id="divIVA">
+    <div class="d-flex justify-content-center">
+        <h2>Tu manual de supervivencia económica</h2>
     </div>
-</div>
-<div>
-    <div>
-        <h2>Calculadora de Impuesto a las Compras en Línea</h2>
-        <form id="formICL">
-            <div class="mb-3">
-            <label for="numeroicl" class="form-label">Coloca el número a calcular</label>
-            <input type="number" class="form-control" name="numeroICL" id="iclInput" aria-describedby="NumeroPasarICL">
-            <button type="submit" class="btn btn-primary">Enviar</button>
-        </form>
+<div class="d-flex justify-content-center">
+    <div class="card" style="width: 18rem;">
+        <img src="https://img.asmedia.epimg.net/resizer/734v4wtsaz6Vg74376McJy-1hs4=/360x203/cloudfront-eu-central-1.images.arcpublishing.com/diarioas/IT7AGEXWDFPR3EKFHIDQBYR6C4.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+        <h5 class="card-title">Impuestos</h5>
+        <p class="card-text">Calculá rápidamente tus Impuestos colocando solamente el importe a calcular.</p>
+        <a href="./Secciones/impuestos.html" class="btn btn-primary">Calcular</a>
+        </div>
     </div>
-    <div id="divICL">
-        
+    <div class="card" style="width: 18rem;">
+        <img src="https://px.cdn.dolarhoy.com/082022/1661269365518.jpg?cw=1280&ch=720" class="card-img-top" alt="...">
+        <div class="card-body">
+        <h5 class="card-title">Dolar</h5>
+        <p class="card-text">Consultá en tiempo real el valor de los distintos tipos de dólares (oficial, blue, etc.).</p>
+        <a href="./Secciones/dolar.html" class="btn btn-primary">Consultar</a>
+        </div>
     </div>
-</div>
-<div id="dolar">
-        
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.26/dist/sweetalert2.all.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script src="script.js"></script>
 </body>
 </html>
