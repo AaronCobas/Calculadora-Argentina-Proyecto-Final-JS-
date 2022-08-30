@@ -101,10 +101,12 @@ buttonCalc.addEventListener("click", (e2) => {
         divMuestraC.innerHTML = ""
         calculosStorage.forEach((calcArray, indice) => {
             divMuestraC.innerHTML += `
-            <div class="card" style="width: 18rem;" id="calculo${indice}">
+            <div class="card" style="width: 25rem;" id="calculo${indice}">
             <div class="card-body">
                 <h5 class="card-title">
                 Tipo de operación:${JSON.stringify(calcArray.impuesto)}
+                </h5>
+                <h5 class="card-title">
                 Resultado: ${JSON.stringify(calcArray.resultado)}
                 </h5>
                 <button class="btn btn-danger">
@@ -115,7 +117,7 @@ buttonCalc.addEventListener("click", (e2) => {
             `
         })
         calculosStorage.forEach((calculo, indice) =>{ //Elimina un cálculo a elección, tanto del html como del array y el localStorage
-            document.getElementById(`calculo${indice}`).children[0].children[1].addEventListener("click", () => {
+            document.getElementById(`calculo${indice}`).children[0].children[2].addEventListener("click", () => {
                 document.getElementById(`calculo${indice}`).remove()
                 calculos.splice(indice,1)
                 localStorage.setItem("calculos", JSON.stringify(calculos))
